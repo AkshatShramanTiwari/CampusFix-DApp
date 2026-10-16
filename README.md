@@ -27,6 +27,37 @@ CampusFix lets campus users submit maintenance issues to an Ethereum-compatible 
 
 The page loads ethers.js v6 from jsDelivr, so an internet connection is required for that CDN dependency.
 
+## Screenshots and evidence
+
+The following evidence should be committed under `screenshots/` and kept up to date with the deployed Sepolia version.
+
+### 1. Running frontend and on-chain request history
+
+![CampusFix frontend showing the connected Sepolia wallet and request history](screenshots/campusfix-frontend.png)
+
+### 2. Smart contract compilation
+
+![CampusFix.sol compiled successfully in Remix](screenshots/compilation-success.png)
+
+### 3. Sepolia deployment
+
+![CampusFix contract deployed on Sepolia in Remix](screenshots/contract-deployed.png)
+
+### 4. MetaMask connection
+
+![CampusFix frontend connected to the user's MetaMask wallet](screenshots/metamask-connected.png)
+
+### 5. Successful request transaction
+
+![Successful CampusFix request creation transaction](screenshots/request-submitted.png)
+
+### 6. Failed or rejected transaction
+
+![A genuine reverted or unauthorized transaction test](screenshots/failed-transaction.png)
+
+> **Evidence integrity:** Only add screenshots captured from actual runs. A failed transaction should show a real validation/revert or unauthorized attempt; do not use a mock screenshot. Never include a seed phrase, private key, or other wallet secret.
+
+
 ## Contract rules
 - Title: non-empty, at most 80 UTF-8 bytes.
 - Description: non-empty, at most 500 UTF-8 bytes.
