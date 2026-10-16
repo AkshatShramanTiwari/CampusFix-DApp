@@ -29,34 +29,28 @@ The page loads ethers.js v6 from jsDelivr, so an internet connection is required
 
 ## Screenshots and evidence
 
-The following evidence should be committed under `screenshots/` and kept up to date with the deployed Sepolia version.
+These screenshots show the current deployed application and wallet/deployment setup. The PNG files belong in the repository's `screenshots/` directory.
 
-### 1. Running frontend and on-chain request history
+### Running frontend and on-chain request history
 
-![CampusFix frontend showing the connected Sepolia wallet and request history](screenshots/campusfix-frontend.png)
+![CampusFix frontend showing a connected Sepolia wallet and an on-chain request](screenshots/campusfix-frontend.png)
 
-### 2. Smart contract compilation
+### Contract deployed on Sepolia
 
-![CampusFix.sol compiled successfully in Remix](screenshots/compilation-success.png)
+![CampusFix contract deployed in Remix with Sepolia selected](screenshots/contract-deployed.png)
 
-### 3. Sepolia deployment
+### Wallet connected in Remix
 
-![CampusFix contract deployed on Sepolia in Remix](screenshots/contract-deployed.png)
+![Remix connected through WalletConnect to the Sepolia wallet](screenshots/metamask-connected.png)
 
-### 4. MetaMask connection
+### Additional required test evidence
 
-![CampusFix frontend connected to the user's MetaMask wallet](screenshots/metamask-connected.png)
+Add genuine screenshots for the following after capturing them from actual runs:
+- Successful request submission / transaction confirmation.
+- Failed or reverted transaction (for example, an unauthorized status update from a non-owner account).
+- Successful contract compilation, if the current deployment screenshot does not clearly show the compiler result.
 
-### 5. Successful request transaction
-
-![Successful CampusFix request creation transaction](screenshots/request-submitted.png)
-
-### 6. Failed or rejected transaction
-
-![A genuine reverted or unauthorized transaction test](screenshots/failed-transaction.png)
-
-> **Evidence integrity:** Only add screenshots captured from actual runs. A failed transaction should show a real validation/revert or unauthorized attempt; do not use a mock screenshot. Never include a seed phrase, private key, or other wallet secret.
-
+Do not use mock or fabricated evidence. Never include a seed phrase, private key, or other wallet secret.
 
 ## Contract rules
 - Title: non-empty, at most 80 UTF-8 bytes.
