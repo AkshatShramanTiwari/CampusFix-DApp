@@ -33,26 +33,68 @@ function setBusy(button, busy, label) {
 }
 function statusName(status) { return STATUS[Number(status)] || "Unknown"; }
 async function connectWallet() {
-  if (!window.ethereum) { message("MetaMask was not detected. Install MetaMask, then reload this page.", "error"); return; }
+  if (!window.ethereum) {
+    message("MetaMask was not detected. Open this site in a browser with the MetaMask extension enabled, then reload.", "error");
+    return;
+  }
+  if (!window.ethers) {
+    message("The ethers.js library did not load. Check your internet connection, then hard-refresh this page.", "error");
+    return;
+  }
+  const button = $("connectButton");
+  setBusy(button, true, "Connecting…");
   try {
     provider = new ethers.BrowserProvider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
-    signer = await provider.getSigner(); activeAccount = await signer.getAddress();
+    signer = await provider.getSigner();
+    activeAccount = await signer.getAddress();
+
+    // Reflect the wallet connection immediately, even if contract configuration is wrong.
+    button.textContent = shortAddress(activeAccount);
+    button.classList.add("connected");
+    $("accountLabel").textContent = shortAddress(activeAccount);
+
+    const network = await provider.getNetwork();
+    const chainId = Number(network.chainId);
+    $("networkLabel").textContent = `Wallet connected · chain ${chainId}`;
+
     if (!ethers.isAddress(CONTRACT_ADDRESS)) {
-      $("connectButton").textContent = shortAddress(activeAccount);
-      $("accountLabel").textContent = shortAddress(activeAccount);
-      $("networkLabel").textContent = "Wallet connected · contract not configured";
-      message("Wallet connected. Add your deployed CampusFix contract address to app.js to enable on-chain features.", "error");
+      contract = null;
+      $("networkLabel").textContent = "Wallet connected · contract address invalid";
+      message("MetaMask connected, but the CampusFix contract address in app.js is invalid.", "error");
       return;
     }
+    if (chainId !== 11155111) {
+      contract = null;
+      $("networkLabel").textContent = `Wrong network · chain ${chainId}`;
+      message("MetaMask connected. Switch MetaMask to Sepolia Test Network to use CampusFix.", "error");
+      return;
+    }
+
+    const code = await provider.getCode(CONTRACT_ADDRESS);
+    if (code === "0x") {
+      contract = null;
+      $("networkLabel").textContent = "Wallet connected · contract not found on Sepolia";
+      message("MetaMask is connected to Sepolia, but no contract code exists at the configured address on this network. In Remix, deploy CampusFix using Injected Provider - MetaMask with Sepolia selected, then update CONTRACT_ADDRESS in app.js.", "error");
+      $("requestCountLabel").textContent = "CampusFix contract not found on Sepolia";
+      return;
+    }
+
     contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
     ownerAccount = await contract.owner();
-    $("connectButton").textContent = shortAddress(activeAccount);
-    $("accountLabel").textContent = shortAddress(activeAccount);
-    $("networkLabel").textContent = `Connected · chain ${Number((await provider.getNetwork()).chainId)}`;
-    $("connectButton").classList.add("connected");
-    await loadRequests(); toast("Wallet connected successfully");
-  } catch (error) { message(error?.shortMessage || error?.message || "Could not connect wallet.", "error"); }
+    $("networkLabel").textContent = "Connected · Sepolia";
+    await loadRequests();
+    toast("Wallet connected successfully");
+  } catch (error) {
+    const detail = error?.shortMessage || error?.reason || error?.message || "Could not connect wallet.";
+    message(detail, "error");
+    if (activeAccount) {
+      $("networkLabel").textContent = "Wallet connected · contract connection failed";
+    }
+  } finally {
+    setBusy(button, false);
+    if (activeAccount) button.textContent = shortAddress(activeAccount);
+  }
 }
 async function loadRequests() {
   if (!contract) { $("requestCountLabel").textContent = "Connect wallet and configure the contract"; return; }
