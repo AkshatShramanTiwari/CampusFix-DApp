@@ -69,3 +69,6 @@ Do not use mock or fabricated evidence. Never include a seed phrase, private key
 7. Attempt to set a request to its current status.
 
 Record observed results and attach real screenshots in the report. Do not claim a test passed until you have run it. Never commit wallet seed phrases, private keys, or other secrets. Request descriptions are public on-chain; do not submit personal or confidential information.
+
+
+![Smart contract compilation](screenshots/CampusFix_Blockchain_Workflow_Infographic.png)
