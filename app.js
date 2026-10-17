@@ -1,5 +1,5 @@
 /* CampusFix frontend — ethers.js v6 */
-const CONTRACT_ADDRESS = "0x32270407188d3a30f1d46f2f4bf6af6790a5242f";
+const CONTRACT_ADDRESS = "0x2c20e95d3cf715e1dbbb48112168ad083fa458cc9";
 const ABI = [
   "function owner() view returns (address)",
   "function requestCount() view returns (uint256)",
