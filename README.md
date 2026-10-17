@@ -72,3 +72,26 @@ Record observed results and attach real screenshots in the report. Do not claim 
 
 
 ![Smart contract compilation](screenshots/CampusFix_Blockchain_Workflow_Infographic.png)
+
+
+
+## Deployment and Testing
+
+- **Network:** Ethereum Sepolia Testnet
+- **Contract:** CampusFix
+- **Contract address:** `0x2c20e95d3cf715e1dbbb48112168ad083fa458cc9`
+- **Frontend:** HTML, CSS, JavaScript, ethers.js v6
+- **Wallet:** MetaMask
+
+### Features
+- Connect MetaMask to Sepolia
+- Submit maintenance requests
+- Store and retrieve requests on-chain
+- View request history and status
+
+### Testing
+- Solidity contract compiled successfully in Remix.
+- Contract deployed successfully on Sepolia.
+- Frontend connected to MetaMask.
+- Submitted maintenance request appears in request history.
+
